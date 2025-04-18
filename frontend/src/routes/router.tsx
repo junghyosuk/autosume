@@ -9,6 +9,8 @@ import Write from '../pages/Write';
 import MyPage from '../pages/MyPage';
 import Settings from '../pages/Settings';
 import Export from '../pages/Export';
+import Signup from '../pages/Signup';
+import Login from '../pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
       { path: 'mypage', element: <MyPage /> },
       { path: 'settings', element: <Settings /> },
       { path: 'export', element: <Export /> },
+      { path: 'signup', element: <Signup /> },
+      { path: 'login', element: <Login /> },
     ],
   },
 ]);
