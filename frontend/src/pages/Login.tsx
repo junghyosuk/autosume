@@ -1,55 +1,57 @@
-import { useState } from 'react'
+// src/pages/Login.tsx
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { authState } from "../recoil/authState";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+const Login = () => {
+  const setAuth = useSetRecoilState(authState);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
 
-    if (!email || !password) {
-      setError('이메일과 비밀번호를 모두 입력해주세요.')
-      return
+  const handleLogin = () => {
+    // 실제로는 API 호출이 들어가야 함 (지금은 테스트용 하드코딩)
+    if (userId === "test" && password === "1234") {
+      setAuth({
+        isLoggedIn: true,
+        user: {
+          id: userId,
+          name: "테스트 유저",
+        },
+      });
+      navigate("/"); // 또는 /mypage 등 원하는 위치로
+    } else {
+      alert("아이디 또는 비밀번호가 잘못되었습니다.");
     }
-
-    setError('')
-    // TODO: 로그인 API 연동
-    alert('로그인 성공! (추후 API 연동 예정)')
-  }
+  };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">로그인</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1 font-medium">이메일</label>
-          <input
-            type="email"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">비밀번호</label>
-          <input
-            type="password"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호 입력"
-          />
-        </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-        >
-          로그인
-        </button>
-      </form>
+    <div className="max-w-sm mx-auto mt-20 p-6 border rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">로그인</h2>
+      <input
+        type="text"
+        placeholder="아이디"
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
+        className="w-full p-2 mb-3 border rounded"
+      />
+      <input
+        type="password"
+        placeholder="비밀번호"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full p-2 mb-3 border rounded"
+      />
+      <button
+        onClick={handleLogin}
+        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+      >
+        로그인
+      </button>
     </div>
-  )
-}
+  );
+};
+
+export default Login;
